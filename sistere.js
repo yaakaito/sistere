@@ -8,7 +8,8 @@ var sistere = {
 		page : {
 				items : [],
 				width : 0, height : 0,
-				now : 0				
+				now : 0	,
+				delay : {}
 		},
 
 		thumbnail : {
@@ -26,7 +27,13 @@ var sistere = {
 										pos : { up : 0, down : 0 }
 								}
 						}
-				}
+				},
+				resouce : {}
+		},
+
+		resouce : {
+				items : [],
+				padding : 50
 		},
 
 		keymap : {
@@ -67,6 +74,7 @@ sistere.init = function(){
 				
 				page.init();
 				thumbnail.init();
+				resouce.init();
 				keymap.init();
 		}
 };
@@ -91,6 +99,8 @@ sistere.page.init = function(){
 						if( pZero){ item.style.opacity = "1"; pZero = false; }else{	item.style.opacity = "0";	}
 						
 						item.innerHTML = sections[i].innerHTML;
+						item.delay = page.delay.init( item);
+						
 						display.removeChild( sections[i--]);
 						display.appendChild( item);
 						page.items.push( item);
@@ -107,12 +117,17 @@ sistere.page.init = function(){
 
 sistere.page.next = function(){
 		
-		with( sistere.page){	
-				if( now < items.length - 1){
-						now++; sistere.thumbnail.cursor.next();
-						items[now].visible();
-						if( now > 0)
-								items[now-1].hidden();	
+		with( sistere.page){
+				if( !delay.next( items[now].delay)){	
+						if( now < items.length - 1){
+								now++; sistere.thumbnail.cursor.next(); 
+								items[now].visible();
+								if( now > 0){
+										items[now-1].hidden();
+										delay.reset( items[now-1].delay);
+										sistere.resouce.close( now-1);
+								}
+						}
 				}
 		}
 		
@@ -124,7 +139,9 @@ sistere.page.prev = function(){
 				if( now > 0){	
 						now--; sistere.thumbnail.cursor.prev();
 						items[now].visible();
-						items[now+1].hidden();	
+						items[now+1].hidden();
+						delay.reset( items[now+1].delay);
+						sistere.resouce.close( now+1);
 				}
 		}
 };
@@ -133,9 +150,55 @@ sistere.page.flip = function(){
 	
 		with( sistere){
 				page.items[page.now].hidden();
+				resouce.close( page.now);
 				page.items[thumbnail.cursor.now].visible();
 				page.now = thumbnail.cursor.now;
 		}
+};
+
+sistere.page.delay.init = function( pageitem){
+	
+		var delayset = {};
+		
+		with( sistere){
+				var items = pageitem.getElementsByClassName( "delay");
+				if( items.length > 0){
+						delayset.enable = true;
+						delayset = sistere.page.delay.reset( { enable : true, items : items});
+				}else{
+						delayset = { enable : false};
+				}
+		}
+
+		return delayset;
+};
+
+sistere.page.delay.reset = function( delayset){
+		
+		if( delayset.enable){
+				
+				delayset.finish = false;
+				delayset.count = 0;
+				delayset.length = delayset.items.length;
+				for( var i = 0; i < delayset.items.length; i++){
+						delayset.items[i].hidden();
+				}
+		}
+		return delayset;
+};
+
+sistere.page.delay.next = function( delayset){
+		
+		if( delayset.enable == true){	
+				if( delayset.count < delayset.length)
+						delayset.items[delayset.count++].visible();
+				else
+						return false;
+
+				return true;
+		}
+		
+		return false;
 };
 
 sistere.thumbnail.init = function(){
@@ -154,9 +217,21 @@ sistere.thumbnail.init = function(){
 						item.innerHTML = page.items[i].innerHTML;
 						thumbnailView.appendChild( item);
 						thumbnail.page.items.push( item);
+						thumbnail.resouce.resize( item);
 				}
 
 				display.appendChild( thumbnailView);
+		}
+};
+
+sistere.thumbnail.resouce.resize = function( object){
+		
+		with(sistere.thumbnail){
+				var resouces = object.getElementsByTagName( "div");
+				for( var i = 0; i < resouces.length; i++){
+						resouces.item( i).style.width = sistere.util.px( page.width / 3);
+						resouces.item( i).style.height = sistere.util.px( page.height / 3);
+				}
 		}
 };
 
@@ -318,12 +393,73 @@ sistere.thumbnail.page.close = function(){
 		}
 };
 
+sistere.resouce.init = function(){
+		
+		var display = document.body;
+		with(sistere){
+				
+				for( var i = 0; i < page.items.length; i++){
+						if( page.items[i].getElementsByTagName("div").length > 0){
+								var object = page.items[i].getElementsByTagName("div")[0];
+								var item = util.view.close( document.createElement( "div"));
+								item.className = "resouce";
+								item.setAttribute( "id", "resouce_" + i); 
+								item.innerHTML = object.innerHTML;
+								item.sistere = { width : object.style.width, 
+																 height : object.style.height,
+																 page : i};
+								display.appendChild( item);
+								resouce.items.push( item);
+								page.items[i].removeChild( object);
+						}
+				}
+		}	
+};
+
+sistere.resouce.open = function( pIndex){
+		
+		with( sistere){
+				var item = resouce.search( pIndex);
+				if( item != null){
+						item.style.width = item.sistere.width;
+						item.style.height = item.sistere.height;
+						item.style.bottom = util.px( resouce.padding);
+						item.style.right = util.px( resouce.padding);
+						item.visible();
+
+						mode.current = mode.resouce;
+				}
+		}
+};
+
+sistere.resouce.close = function( pIndex){
+
+		with( sistere){
+				var item = resouce.search( pIndex);
+				if( item != null){
+						util.view.close( item).hidden();
+						
+						mode.current = mode.slide;
+				}
+		}
+};
+
+sistere.resouce.search = function( pIndex){
+	
+		with( sistere.resouce)
+				for( var i = 0; i < items.length; i++)
+						if( items[i].sistere.page == pIndex)
+								return items[i];
+		
+		return null;
+};
+
 sistere.util.view.close = function( element){
 		with( sistere.util){
 				element.style.width = px( view.hidden.width);
 				element.style.height = px( view.hidden.height);
 				element.style.bottom = px( view.hidden.bottom);
-				element.style.rigth = px( view.hidden.rigth);
+				element.style.right = px( view.hidden.right);
 		}
 
 		return element;
@@ -341,14 +477,14 @@ sistere.keymap.init = function(){
 							if ( util.vInAry( e.keyCode, keymap.next)) {
 									if( mode.current == mode.thumbnail)
 											thumbnail.cursor.next();
-									else if( mode.current == mode.slide)
+									else if( mode.current == mode.slide || mode.current == mode.resouce)
 											page.next();
 							}
 							
 							if ( util.vInAry( e.keyCode, keymap.prev)) {
 									if( mode.current == mode.thumbnail)
 											thumbnail.cursor.prev();
-									else if( mode.current == mode.slide)
+									else if( mode.current == mode.slide || mode.current == mode.resouce)
 											page.prev();
 							}
 
@@ -360,7 +496,11 @@ sistere.keymap.init = function(){
 							}
 							
 							if( util.vInAry( e.keyCode, keymap.down)){
-									if( mode.current == mode.thumbnail)
+									if( mode.current == mode.slide)
+											resouce.open( page.now);	
+									else if( mode.current == mode.resouce)
+											resouce.close( page.now);
+									else if( mode.current == mode.thumbnail)
 											thumbnail.cursor.down();
 							}
 					}

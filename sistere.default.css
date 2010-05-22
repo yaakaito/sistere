@@ -1,0 +1,141 @@
+*{
+
+		Margin: 0;
+		padding: 0;
+}
+
+body{
+		overflow: hidden;
+}
+	
+.background{
+		background: -webkit-gradient(
+            linear,
+            center top,
+            center bottom,
+            from(#000000),
+            to(#444444)
+        );
+}
+
+.page{
+
+		-webkit-transition: all 0.5s ease-in-out;
+		-webkit-transform-origin: 50% 50%;
+		position: absolute;
+		text-align: center;
+
+}
+
+.resouce{
+		background: -webkit-gradient(
+            linear,
+            center top,
+            center bottom,
+            from(#000000),
+            to(#444444)
+    );
+		-webkit-transition: all 0.5s ease-in-out;
+		-webkit-transform-origin: 50% 50%;
+		position: absolute;
+}
+
+.delay{
+		-webkit-transition: all 1.0s ease;
+}
+
+#thumbnailView{
+		-webkit-transition: all 0.5s ease;
+		-webkit-transform-origin: 50% 50%;
+    -webkit-box-shadow: black 2px 2px 10px;
+    -webkit-border-radius: 10px;
+		position: absolute;
+		border: 1px #ffffff solid;
+		z-index: 1;
+	
+}
+
+#thumbnailView div{
+		position: absolute;
+		bottom : 0px;
+		right : 0px;
+		border: 1px #ffffff solid;
+	
+}
+
+#help{
+		-webkit-transition: all 0.5s ease-in-out;
+		-webkit-transform-origin: 50% 50%;
+    -webkit-box-shadow: black 2px 2px 10px;
+    -webkit-border-radius: 10px;
+		position: absolute;
+		z-index: 1;
+		border: 1px #ffffff solid;
+
+}
+
+#help ul{
+		margin: 10px;
+		color: #ffffff;
+		font-size: 24px;
+		font-family:/*Bank Gothic, Snell Roundhand,Party LET,*/Optima, Verdana,Arial,Osaka,Helvetica,sans-serif;
+		list-style: none;
+}
+
+
+p, h1, h2{
+		
+		text-shadow: 2px 2px 3px #ffffaa;
+		color: #ffffff;
+		font-family:/*Bank Gothic, Snell Roundhand,Party LET,*/Optima, Verdana,Arial,Osaka,Helvetica,sans-serif;
+		font-size: 64px;
+}
+
+p{
+
+		margin-top: 24%;
+}
+p.delay{
+		margin: 10px;
+}
+
+h2{
+
+		font-size: 82px;
+		margin-top: 23%;
+}
+
+h1{
+
+		font-size: 128px;
+		margin-top: 20%;
+}
+
+div.thumbnail_select{
+
+    -webkit-box-shadow: #cccccc 0px 0px 60px;
+		-webkit-transition: all 0.5s ease;
+		-webkit-transform-origin: 50% 50%;
+		position:absolute;
+		border: 1px #ffffff solid;
+		text-align:center;
+}
+
+div.thumbnail_unSelect{
+
+		-webkit-transition: all 0.5s ease;
+		-webkit-transform-origin: 50% 50%;
+		position:absolute;
+		border: 1px #ffffff solid;
+		text-align:center;
+}
+
+#thumbnailView p{
+		font-size: 12px;
+}
+#thumbnailView h1{
+		font-size: 32px;
+}
+#thumbnailView h2{
+		font-size: 24px;
+}
