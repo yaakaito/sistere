@@ -1,3 +1,14 @@
+/* 
+ * Sietere v0.01 
+ * yaakaito.org/sistere/
+ * 
+ * Create by yaakaito 
+ * yaakaito.org , yaakaito@gmail.com
+ * MIT Licence
+ * 
+ * 2010/05/23
+ */
+
 var sistere = {
 		
 		mode : {
@@ -229,6 +240,7 @@ sistere.thumbnail.resouce.resize = function( object){
 		with(sistere.thumbnail){
 				var resouces = object.getElementsByTagName( "div");
 				for( var i = 0; i < resouces.length; i++){
+						resouces.item( i).hidden();
 						resouces.item( i).style.width = sistere.util.px( page.width / 3);
 						resouces.item( i).style.height = sistere.util.px( page.height / 3);
 				}

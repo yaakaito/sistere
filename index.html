@@ -2,83 +2,159 @@
 <html lang="ja">
 	<head>
 		<meta charset="utf-8" />
-		<title>Sistere</title>
+		<title>Sistere ~HTML5 Prezentaion~</title>
 	</head>
 	<body>
+		<article>
+			<h1>Sistere ~HTML5 Prezentaion~</h1>
 			<section>
-				<h1>Sistere</h1>
-				<p class="delay">aaa</p>
-				<p class="delay">bbb</p>
-				<p class="delay">ccc</p>
-				<div style="width : 800px; height : 600px;">
-					<object height="100%" width="100%" type="application/x-shockwave-flash" id="youtubeplayer_player" data="http://www
-											.youtube.com/v/lapdPCgVFsc&border=0&enablejsapi=1playerapiid=ytplayer"><param name="allowScriptAccess" value="always"></object>
-				</div>
-			</section>
-			<section>
-				<p>HTML5+CSS3</p>
-			</section>
-			<section>
-				<p>and JavaScript</p>
-			</section>
-			<section>
-				<h2>Sistere = </h2>
-			</section>
-			<section>
-				<p>HTML5+CSS3+JavaScript</p>
-			</section>
-			<section>
-				<h2>Concept</h2>
-			</section>
-			<section>
-				<p>Easily</p>
-				<!-- keynoteとかpowerpointとかまじだるいから-->
-			</section>
-			<section>
-				<p>Simpliy</p>
-				<!-- 単機能なので文字を一杯書けない、改善する気はない -->
-			</section>
-			<section>
-				<p>Explicitly</p>
-				<!-- そして明確に -->
-			</section>
-			<section>
-				<p>and Rich a little</p>
-				<!-- CSS3 + JavaScriptによるちょっとリッチなUI -->
-			</section>
-			<section>
-				<h2>How to use</h2>
-				<!-- 文字は大きく -->
-			</section>
-			<section>
+				<h2>About</h2>
 				<p>
-					CSS ANIMATIONS<br /> 
-					(safari or chrome)
+					Sistereはより簡単に、シンプルに、簡潔にをコンセプトにしたプレゼンテーションツールです.<br />
+					簡単なHTMLを記述し、CSSでスタイルを付けることで柔軟で、すこしリッチなプレゼンテーションをすぐ体感できることを目指しています.<br />
 				</p>
-				<!-- CSSanimationを実装したブラウザ -->
 			</section>
 			<section>
-				<p>&lt;section></p>
-				<!-- <section>で囲まれt部分が1ページ -->
+				<h2>How to use & Functions</h2>
+				<section>
+					<h3>HTML</h3>
+					<p>
+						簡単なHTMLを記述するだけで、プレゼンテーションを作る事が出来ます.<br />
+						Sistereでは&lt;section>で囲まれた部分が1ページになります.<br />
+					</p>
+					<pre>
+&lt;!DOCTYPE html>
+&lt;html lang="ja">
+&lt;head>
+	&lt;meta charset="utf-8" />
+	&lt;title>Sistere&lt;/title>
+&lt;/head>
+&lt;body>
+	&lt;section>
+		&lt;h1>Exsample&lt;/h1>
+	&lt;/section>
+	&lt;section>
+		&lt;p>Text&lt;/p>
+	&lt;/section>
+&lt;/body>
+&lt;link href="./sistere.default.css" rel="stylesheet" type="text/css" media="screen">
+&lt;script src="./sistere.js" type="text/javascript">&lt;/script>
+&lt;/html>
+					</pre>
+				</section>
+				<section>
+					<h3>Delay</h3>
+					<p>
+						テキストやオブジェクトを段階的に表示していく機能です.
+						エレメントのクラス名に"delay"を指定します.
+					</p>
+				<pre>
+&lt;section>
+	&lt;p class="delay">delay1&lt;/p>
+	&lt;p class="delay">delay2&lt;/p>
+	&lt;p class="delay">delay3&lt;/p>
+&lt;/section>
+				</pre>
+				</section>
+				<section>
+					<h3>Resource</h3>
+					<p>
+						ページ内にもう1枚だけ別のレイヤーを重ねて,画像や動画を表示する機能です.<br />
+						その中にもさらにHTMLを記述できるので,コードビューなどにも使えます.<br />
+						&lt;div>で囲むことで新しいレイヤーを定義できます.2つ以上の&lt;div>は無視されます.<br />
+						表示する時の大きさはstyleのwidth,heightで指定します.スライドの大きさに合わせた%指定ができますが,画像等が引き延ばされたりや縮小されたくないときはpxでも指定できます.<br />
+					</p>
+					<pre>
+&lt;section>
+	&lt;h2>Resouce&lt;/h2>
+	&lt;div style="width:80%; height: 60%;">
+		&lt;img src=".." style="width: 100%; height: 100%" />
+	&lt;/div>
+&lt;/section>
+				</pre>
+				</section>
+				<section>
+					<h3>Auto Text Size</h3>
+					<p>
+						画面のサイズに合わせてテキストのサイズを自動調整します.<br />
+					</p>
+					<pre>
+&lt;script>
+  sistere.page.lines = 20; //20行くらい入る様にする
+&lt;/script>
+					</pre>					
+				</section>
+				<section>
+					<h3>Quick Text Resize</h3>
+					<p>
+						実際にプロジェクターに表示した時に,小さい/大きい文字表示を簡単に切り替える機能です.<br />
+						全体のサイズを変更するのではなく,文字の大きさのみを調整します.<br />
+					</p>
+					<ul>
+						<li>文字のサイズを大きくする : "+"キー</li>
+						<li>文字のサイズを小さくする : "-"キー</li>
+					</ul>
+			</section>
+	
+			<section>
+				<h2>Exsample</h2>
+				<pre>
+&lt;!DOCTYPE html>
+&lt;html lang="ja">
+&lt;head>
+	&lt;meta charset="utf-8" />
+	&lt;title>Sistere&lt;/title>
+&lt;/head>
+&lt;body>
+	&lt;section>
+		&lt;h1>Exsample&lt;/h1>
+	&lt;/section>
+	&lt;section>
+		&lt;p>Text&lt;/p>
+	&lt;/section>
+	&lt;section>
+		&lt;p class="delay">delay1&lt;/p>
+		&lt;p class="delay">delay2&lt;/p>
+		&lt;p class="delay">delay3&lt;/p>
+	&lt;/section>
+	&lt;section>
+		&lt;h2>Resouce&lt;/h2>
+		&lt;div style="width:400px; height: 400px">
+			&lt;img src=".." style="width: 100%; height: 100%" />
+		&lt;/div>
+	&lt;/section>
+&lt;/body>
+&lt;link href="./sistere.default.css" rel="stylesheet" type="text/css" media="screen">
+&lt;script src="./sistere.js" type="text/javascript">&lt;/script>
+&lt;/html>
+				</pre>
 			</section>
 			<section>
-				<p>write HTML !</p>
-				<!-- そこにHTMLを書いて -->
+				<h2>Platform</h2>
+				<ul>
+					<li>Safari</li>
+					<li>Chrome</li>
+					<li>WebKit</li>
+				</ul>
+				いずれも最新版を推奨.
 			</section>
 			<section>
-				<p>+ CSS</p>
-				<!-- 好きなようにスタイルを付ける -->
+				<h2>Download</h2>
+				<a herf="hoge">sistere_v0.01.zip</a>
 			</section>
 			<section>
-				<p>and Talk </p>
-				<!-- 話すためのプレゼン -->
+				<h2>GitHub</h2>
+				<a href="http://github.com/yaakaito/sistere">http://github.com/yaakaito/sistere</a>
 			</section>
-
 			<section>
-				<h2>Thank you for listening.</h2>
+				<h2>License</h2>
+				<p>MIT License</p>
 			</section>
+			<section>
+				<p class="copyright">
+					<a href="http://www.yaakaito.org/">yaakaito.org</a>
+				</p>
+			</section>
+		</article>
 	</body>
-	<link href="./sistere.default.css" rel="stylesheet" type="text/css" media="screen">
-	<script src="./sistere.js" type="text/javascript"></script>
 </html>
-
