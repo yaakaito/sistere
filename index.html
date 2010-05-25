@@ -130,6 +130,26 @@
 				</pre>
 			</section>
 			<section>
+				<h2>Styling</h2>
+				<p>
+					Sistereでは,見た目上の大きな変更は推奨していません.これはResource機能を使って頂きたいことと"手を入れずともそれなりにリッチ"にできるというコンセプトがあるからです.<br />
+					しかし,まったく変更できないのでは意味が無いので,ある程度(背景色,文字色)はCSSで指定できるようにしてあります.簡単なテンプレートCSS程度は作れる様に,という程度です.<br />
+				</p>
+				<section>
+					<h3>Background</h3>
+					<p>
+						各々の背景色は div.background の値を書き換える事で,サムネイルページの背景,Resourceで表示されるレイヤーの背景以外に適用することができます.<br />
+						サムネイルページの背景色は div.thumbnail_select 及び div.thumbnail_unSelect の値を書き換えることで行えます.<br />
+						背景を別々に書き換えたい場合はそれぞれ div#background div#thumbnail を変更することで適用されます.<br />
+						Recouseの背景に関しては,それぞれに適用されるべき背景等がある可能性が考えられるので,div#resource_(Resourceのindex)で個別に指定します.<br />
+						一括指定する場合はdiv.resourceで行えますが,あまり推奨されません.<br />
+					</p>
+					<pre>
+exsample書く
+					</pre>
+				</section>
+			</section>
+			<section>
 				<h2>Platform</h2>
 				<ul>
 					<li>Safari</li>

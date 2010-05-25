@@ -20,6 +20,7 @@ var sistere = {
 				items : [],
 				width : 0, height : 0,
 				now : 0	,
+				lines : 25,
 				delay : {}
 		},
 
@@ -53,7 +54,9 @@ var sistere = {
 				up : [38], //↑
 				down : [40], //↓
 				help : [72], //h
-				ok : [13] //enter;
+				ok : [13], //enter
+				plus : [187],
+				minus : [189]
 		},
 
 		util : {
@@ -65,6 +68,11 @@ var sistere = {
 								bottom : -10, right : -10,
 								width : 1, height : 1
 						}
+				},
+				quick : {
+						page : 0,
+						thumbnail : 0,
+						now : 1.0
 				}
 		}
 };
@@ -82,11 +90,15 @@ sistere.init = function(){
 				thumbnail.page.width = thumbnail.page.margin.horizon * 3;
 				thumbnail.page.height = thumbnail.page.margin.vertical * 3;
 				thumbnail.page.move.over.pos.down = page.height - thumbnail.page.height - thumbnail.padding*2;
-				
+
 				page.init();
 				thumbnail.init();
 				resouce.init();
 				keymap.init();
+
+				sistere.util.quick.page = page.height / page.lines;
+				sistere.util.quick.thumbnail = thumbnail.page.height / page.lines * 2;
+				sistere.util.quick.resize( sistere.util.quick.now);
 		}
 };
 
@@ -515,11 +527,29 @@ sistere.keymap.init = function(){
 									else if( mode.current == mode.thumbnail)
 											thumbnail.cursor.down();
 							}
+
+							if( util.vInAry( e.keyCode, keymap.plus)){
+									util.quick.now += 0.1;
+									util.quick.resize();
+							}
+							if( util.vInAry( e.keyCode, keymap.minus)){
+									util.quick.now -= 0.1;
+									util.quick.resize();
+							}
+
+							
 					}
         }, false);
 
 };
 
+sistere.util.quick.resize = function(){
+		
+		
+		document.body.style.fontSize = sistere.util.px( sistere.util.quick.page * sistere.util.quick.now);
+		document.getElementById( "thumbnailView").style.fontSize = sistere.util.px( sistere.util.quick.thumbnail * sistere.util.quick.now);
+					
+};
 
 Element.prototype.hidden = function(){
 
