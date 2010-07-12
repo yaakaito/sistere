@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <title>Sistere</title>
+    <meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1.0,maximum-scale=1.0" />
+    <link href="../sistere.default.css" rel="stylesheet" type="text/css" media="screen" />  
+    <link href="./monochro.css" rel="stylesheet" type="text/css" media="screen" />  
+  </head>
+  <body>
+    <article style="width:100%; height:100%">
+
+      <section>
+        <h1>Sistere</h1>
+        <address>yaakaito (UKYO Kazuma)</address>
+      </section>
+
+      <section class="list">
+        <h2>Agenda</h2>
+        <ul>
+          <li effect="delay">これはなに？</li>
+          <li effect="delay">機能</li>
+          <li effect="delay">使い方</li>
+          <li effect="delay">まとめ</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>これはなに？</h2>
+      </section>
+
+      <section>
+        <p>HTMLとJavaScriptとCSSで作られたプレゼンツール</p>
+      </section>
+
+      <section>
+        <p>HTMLなのでHTML5とかのデモにも便利</p>
+      </section>
+
+      <section>
+        <p>埋め込みも簡単なので資料にも最適です</p>
+      </section>
+
+      <section>
+        <h2>機能</h2>
+      </section>
+
+      <section class="description">
+        <h2>STYLE</h2>
+        <div>
+          <p>
+            各要素に「effect」を定義することで、<br />
+            様々な視覚効果を演出することができます。 
+          </p>
+        </div>
+      </section>
+      
+      <section class="description">
+        <h2>ThumbnailMode</h2>
+        <div>
+          <p>
+            スライドのサムネイルを一覧表示することができます。 
+          </p>
+          <ul>
+            <li>サムネイルを表示する : "上"キー</li>
+            <li>サムネイルを選択する : "上下左右"キー</li>
+            <li>サムネイルを選択して閉じる : "Enter"キー</li>
+          </ul>  
+        </div>
+      </section>
+      
+      <section class="description">
+        <h2>Auto Text ReSize</h2>
+        <div>
+          <p>
+            Sistereは画面のサイズに合わせて、<br />
+            テキストのサイズを自動調整します。<br />
+          </p>
+        </div>
+      </section>
+      
+      <section class="description">
+        <h2>Quick Text ReSize</h2>
+        <div>
+          <p>
+          実際にプロジェクターに表示した時に、小さい/大きい文字表示を簡単に切り替えることができます。<br />
+          またこの機能は、全体のサイズを変更するのではなく、 文字の大きさのみを調整します.<br />
+          </p>
+          <ul>
+            <li>文字のサイズを大きくする : "+"キー</li>
+            <li>文字のサイズを小さくする : "-"キー</li>
+          </ul>
+        </div>
+        
+      </section>
+      
+      <section>
+        <h2>使い方</h2>
+      </section>
+
+      <section>
+        <p>ページの定義</p>
+      </section>
+
+      <section>
+        <pre>
+&lt;section>
+  &lt;h1>Hello World&lt;/h1>
+&lt;/section>
+&lt;section>
+  &lt;p>本文&lt;/p>
+&lt;/section>
+&lt;section>
+  &lt;p>本文&lt;/p>
+&lt;/section></pre>
+      </section>
+      <section>
+        <p>エフェクトの付け方</p>
+      </section>
+
+      <section class="description">
+        <h2>CSS</h2>
+        <div>
+          <pre>
+[effect=delay]{
+  opacity: 0;
+}
+[effect=delay][effected]{
+  opacity: 1;
+}</pre>
+        </div>
+      </section>
+
+      <section class="description">
+        <h2>HTML</h2>
+        <div>
+          <pre>
+&lt;section class="list">
+  &lt;h2>Agenda&lt;/h2>
+  &lt;ul>
+    &lt;li effect="delay">これはなに？&lt;/li>
+    &lt;li effect="delay">機能&lt;/li>
+    &lt;li effect="delay">使い方&lt;/li>
+    &lt;li effect="delay">まとめ&lt;/li>
+  &lt;/ul>
+&lt;/section></pre>
+        </div>
+      </section>
+
+      <section>
+        <h2>まとめ</h2>
+      </section>
+
+      <section>
+        <p>使ってね！</p>
+      </section>
+
+      <section>
+        <p>テンプレートもあるよ！</p>
+      </section>
+
+      <section>
+        <p>http://yaakaito.org/sistere/</p>
+      </section>
+
+      <section class="last">
+        <h1>ご清聴ありがとうございました</h1>
+      </section>
+
+ 
+    </article>
+
+  </body>
+  <script src="../sistere.js" type="text/javascript"></script>
+</html>
+

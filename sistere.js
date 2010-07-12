@@ -1,12 +1,12 @@
 /* 
- * Sietere v0.01 
+ * Sietere v1.01 
  * yaakaito.org/sistere/
  * 
  * Create by yaakaito 
  * yaakaito.org , yaakaito@gmail.com
  * MIT Licence
  * 
- * 2010/05/23
+ * 2010/07/05
  */
 
 var sistere = {
@@ -17,35 +17,12 @@ var sistere = {
 		},
 
 		page : {
-				items : [],
-				width : 0, height : 0,
-				now : 0	,
-				lines : 25,
-				delay : {}
+				items : [], now : 0,
+				now : null, index  : 0
 		},
 
 		thumbnail : {
-
-				width : 0, height : 0,
-				padding : 50,
-				cursor : { now : 0 },
-				line : { now : 0, top : 0},
-				page : {
-						items : [],
-						margin : { vertical : 0, horizon : 0 },
-						width : 0, height : 0,
-						move : { 
-								over : { 
-										pos : { up : 0, down : 0 }
-								}
-						}
-				},
-				resouce : {}
-		},
-
-		resouce : {
-				items : [],
-				padding : 50
+        items : [],  now : null, layer : null, scrollCnt : 0
 		},
 
 		keymap : {
@@ -59,508 +36,417 @@ var sistere = {
 				minus : [189]
 		},
 
-		util : {
-				px : function(s){ return s + "px"; },
-				vInAry : function( v, ary){ for( var i=0; i<ary.length;i++)	if( ary[i] == v) return true; return false;},
-				helpHtml : "<ul><li> → : Next</li><li> ← : Back</li><li> ↑ : SlideView</li><li> ↓ : Help</li></ul>",
-				view : {
-						hidden: {
-								bottom : -10, right : -10,
-								width : 1, height : 1
-						}
-				},
-				quick : {
-						page : 0,
-						thumbnail : 0,
-						now : 1.0
-				}
-		}
-};
-
-sistere.init = function(){
-		
-		with( sistere){
+		touch : {
 				
-				page.width = window.innerWidth;
-				page.height = window.innerHeight;
-				thumbnail.width = page.width - thumbnail.padding * 2;
-				thumbnail.height = page.height - thumbnail.padding * 2;
-				thumbnail.page.margin.horizon = ( page.width - thumbnail.padding*2 ) / 13;
-				thumbnail.page.margin.vertical = ( page.height - thumbnail.padding*2 ) / 13;
-				thumbnail.page.width = thumbnail.page.margin.horizon * 3;
-				thumbnail.page.height = thumbnail.page.margin.vertical * 3;
-				thumbnail.page.move.over.pos.down = page.height - thumbnail.page.height - thumbnail.padding*2;
+				
+		},
 
-				page.init();
-				thumbnail.init();
-				resouce.init();
-				keymap.init();
+		util : {
+        size : window.innerHeight / 25,
+        zoom : 1
+		},
 
-				sistere.util.quick.page = page.height / page.lines;
-				sistere.util.quick.thumbnail = thumbnail.page.height / page.lines * 2;
-				sistere.util.quick.resize( sistere.util.quick.now);
-		}
+    hock : {
+        
+    },
+
+    toString : function(){ return "Sistere Object";}
 };
 
-//todo:pagecompailに分割
-//thumbnailの生成も一緒にできそうだなー withに渡す
+
 sistere.page.init = function(){
 
-		with( sistere){
-				var sections = document.getElementsByTagName( "section");
-				var display = document.body;
-				var pZero = true;
-				
-				for( var i = 0; i < sections.length; i++){
-						
-						var item = document.createElement( "div");
-						item.className = "page";
-						item.style.width = util.px( page.width);
-						item.style.height = util.px( page.height);
-						item.style.top =  util.px( 0);
-						item.style.left = util.px( 0);
-						if( pZero){ item.style.opacity = "1"; pZero = false; }else{	item.style.opacity = "0";	}
-						
-						item.innerHTML = sections[i].innerHTML;
-						item.delay = page.delay.init( item);
-						
-						display.removeChild( sections[i--]);
-						display.appendChild( item);
-						page.items.push( item);
-				}
-				
-				var background = document.createElement( "div");
-				background.setAttribute( "id", "slideBackground");
-				background.className = "background";
-				background.style.width = util.px( page.width);
-				background.style.height = util.px( page.height);
-				display.appendChild( background);
-		}
+		var sections = document.getElementsByTagName( "section").toArray();
+		for( var i = 0; i < sections.length; i++){
+        sistere.page.items.push( sistere.page.create( sections[i]));
+	  }		
 };
 
 sistere.page.next = function(){
-		
-		with( sistere.page){
-				if( !delay.next( items[now].delay)){	
-						if( now < items.length - 1){
-								now++; sistere.thumbnail.cursor.next(); 
-								items[now].visible();
-								if( now > 0){
-										items[now-1].hidden();
-										delay.reset( items[now-1].delay);
-										sistere.resouce.close( now-1);
-								}
-						}
-				}
-		}
-		
+    
+
+    if( sistere.page.now.nextEffect() && sistere.mode.current == sistere.mode.slide){
+        sistere.page.now.updateEffect();
+        return;
+    }
+    sistere.page.move( sistere.page.index + 1);
+
 };
 
 sistere.page.prev = function(){
-		
-		with( sistere.page){	
-				if( now > 0){	
-						now--; sistere.thumbnail.cursor.prev();
-						items[now].visible();
-						items[now+1].hidden();
-						delay.reset( items[now+1].delay);
-						sistere.resouce.close( now+1);
-				}
-		}
+
+    sistere.page.move( sistere.page.index - 1);
 };
 
-sistere.page.flip = function(){
-	
-		with( sistere){
-				page.items[page.now].hidden();
-				resouce.close( page.now);
-				page.items[thumbnail.cursor.now].visible();
-				page.now = thumbnail.cursor.now;
-		}
+sistere.page.up = function(){
+
+    sistere.page.move( sistere.page.index - 3);
 };
 
-sistere.page.delay.init = function( pageitem){
-	
-		var delayset = {};
-		
-		with( sistere){
-				var items = pageitem.getElementsByClassName( "delay");
-				if( items.length > 0){
-						delayset.enable = true;
-						delayset = sistere.page.delay.reset( { enable : true, items : items});
-				}else{
-						delayset = { enable : false};
-				}
-		}
+sistere.page.down = function(){
 
-		return delayset;
+    sistere.page.move( sistere.page.index + 3);
 };
 
-sistere.page.delay.reset = function( delayset){
-		
-		if( delayset.enable){
-				
-				delayset.finish = false;
-				delayset.count = 0;
-				delayset.length = delayset.items.length;
-				for( var i = 0; i < delayset.items.length; i++){
-						delayset.items[i].hidden();
-				}
-		}
-		return delayset;
+sistere.page.move = function( no){
+
+
+    if( no >= 0 && no < sistere.page.items.length){
+        
+        var tag = sistere.page.items[no],
+        tTag = sistere.thumbnail.items[no],
+        now = sistere.page.now,
+        tNow = sistere.thumbnail.now;
+
+        if( no > sistere.page.index){
+            //次のページに入る時にEffectを戻す
+            tag.downEffect();
+        }
+
+        if( now != null){
+            now.classList.remove( "now");
+            tNow.classList.remove( "now");
+           
+        }
+
+        if( sistere.mode.current == sistere.mode.slide){
+            tag.classList.add( "now");
+        }
+
+
+        sistere.page.now = tag;
+
+        location.hash = "#p" + no.toString();
+
+        sistere.thumbnail.move( no);
+
+        sistere.page.index = no;
+    }
 };
 
-sistere.page.delay.next = function( delayset){
-		
-		if( delayset.enable == true){	
-				if( delayset.count < delayset.length)
-						delayset.items[delayset.count++].visible();
-				else
-						return false;
+sistere.thumbnail.move = function( no){
+    
+    if( no >= 0 && no < sistere.page.items.length){
+        
+        var tTag = sistere.thumbnail.items[no],
+        tNow = sistere.thumbnail.now,
+        index = sistere.page.index;
+        
+        if( tNow != null){
+            tNow.classList.remove( "now");
+        }
+        
+        tTag.classList.add( "now");
+        sistere.thumbnail.now = tTag;
 
-				return true;
-		}
-		
-		return false;
+        if( index < sistere.page.items.length - 10 &&
+            ( no == index+3 || (index%3==2 && no > index))){
+            sistere.thumbnail.layer.scroll( -24);
+            sistere.thumbnail.scrollCnt++;
+        }
+
+        if( sistere.thumbnail.scrollCnt > 0 &&  no < sistere.thumbnail.scrollCnt*3 &&
+            ( no == index-3 || (index%3==0 && no < index))){
+            sistere.thumbnail.layer.scroll( 24);
+            sistere.thumbnail.scrollCnt--;
+        }
+    }
 };
 
 sistere.thumbnail.init = function(){
 		
-		with( sistere){
-				var display = document.body;
-				var thumbnailView = util.view.close( document.createElement( "div"));
-				thumbnailView.setAttribute( "id", "thumbnailView");
-				thumbnailView.className = "background";
-				
-				for( var i = 0; i < page.items.length; i++){
-						var item = util.view.close( document.createElement( "div"));
-						item.setAttribute( "id", "thumbnail_" + i);
-						if( i == 0) item.className = "thumbnail_select"; else item.className = "thumbnail_unSelect";
-						item.style.visibility = "hidden";
-						item.innerHTML = page.items[i].innerHTML;
-						thumbnailView.appendChild( item);
-						thumbnail.page.items.push( item);
-						thumbnail.resouce.resize( item);
-				}
+    var display = document.getElementsByTagName( "article")[0],
+        thumbLayer = document.createElement( "div"),
+        i = 0, thumbIn = "",
+        pageItems = sistere.page.items, pLen = pageItems.length,
+        thumbItems = [], offset = [ "2.5%", "35%", "67.5%"], tmp, topOffset = 2.5,
+        aspect = window.innerHeight/window.innerWidth;
 
-				display.appendChild( thumbnailView);
-		}
-};
+    thumbLayer.id="tlayer";
+    thumbLayer.styler( { position:"absolute", top:"0%", left:"12.5%",
+                         width:"75%", height:"100%", opacity:"0"});
 
-sistere.thumbnail.resouce.resize = function( object){
-		
-		with(sistere.thumbnail){
-				var resouces = object.getElementsByTagName( "div");
-				for( var i = 0; i < resouces.length; i++){
-						resouces.item( i).hidden();
-						resouces.item( i).style.width = sistere.util.px( page.width / 3);
-						resouces.item( i).style.height = sistere.util.px( page.height / 3);
-				}
-		}
+    thumbLayer.scroll = function( v){
+        this.style.top = ( parseInt( this.style.top.split( "%")[0]) + v) + "%";
+    };
+
+    for( ; i < pLen; i++){
+        thumbIn += pageItems[i].outerHTML;
+    }
+    thumbLayer.innerHTML = thumbIn;
+    thumbItems = thumbLayer.getElementsByTagName( "section").toArray();
+    
+    for( i = 0; i < pLen; i++){
+   
+        if( i!=0 && i%3==0) topOffset+=22.5+1.5;
+        tmp = thumbItems[i];
+        tmp.styler( { position:"absolute",top:topOffset+"%",left:offset[i%3],
+                      width:"30%",height:"22.5%",
+                      backgroundColor:"#ffffff",opacity:"1"
+                    });
+    }
+
+    sistere.thumbnail.now = thumbItems[0];
+    sistere.thumbnail.items = thumbItems;
+    sistere.thumbnail.layer = thumbLayer;
+    
+    display.appendChild( thumbLayer);
+
 };
 
 sistere.thumbnail.open = function(){
 		
-		with( sistere){
-				var view = document.getElementById( "thumbnailView");
-				view.style.width = util.px( thumbnail.width);
-				view.style.height = util.px( thumbnail.height);
-				view.style.bottom = util.px( thumbnail.padding);
-				view.style.right = util.px( thumbnail.padding);
-				mode.current = mode.thumbnail;
-				
-				thumbnail.page.open();
-		}
+    sistere.thumbnail.layer.styler( { opacity:"1" });
+    sistere.page.now.classList.remove( "now");
+		sistere.mode.current = sistere.mode.thumbnail;
+		
 };
 
 sistere.thumbnail.close = function(){
+
+    sistere.thumbnail.layer.styler( { opacity:"0" });
+    sistere.page.now.classList.add( "now");
+		sistere.mode.current = sistere.mode.slide;
 		
-		with( sistere){
-				util.view.close( document.getElementById( "thumbnailView"));
-				thumbnail.page.close();
-				mode.current = mode.slide;
-		}
-};
-
-sistere.thumbnail.select = function(){
-	
-		with( sistere){
-				page.flip();
-				thumbnail.close();
-		}
-		
-};
-
-sistere.thumbnail.cursor.next = function(){
-
-		with( sistere.thumbnail)
-		if( cursor.now < page.items.length-1){
-				cursor.unselect( cursor.now);
-				cursor.select( ++cursor.now);
-				cursor.refresh( sistere.keymap.next);
-		}
-};
-
-sistere.thumbnail.cursor.prev = function(){
-
-		with( sistere.thumbnail)
-		if( cursor.now > 0){
-				cursor.unselect( cursor.now);
-				cursor.select( --cursor.now);
-				cursor.refresh( sistere.keymap.prev);
-		}
-};
-
-sistere.thumbnail.cursor.up = function(){
-		
-		with( sistere.thumbnail)
-				if( line.now > 0){
-						cursor.unselect( cursor.now);
-						cursor.now -= 3;
-						cursor.select( cursor.now);
-						cursor.refresh( sistere.keymap.up);
-				}
-};
-
-sistere.thumbnail.cursor.down = function(){
-		with( sistere.thumbnail)
-				if( line.now < Math.floor( page.items.length / 3)
-						&& cursor.now + 3 <  page.items.length){
-						cursor.unselect( cursor.now);
-						cursor.now += 3;	
-						cursor.select( cursor.now);
-						cursor.refresh( sistere.keymap.down);
-				}
-};
-
-sistere.thumbnail.cursor.refresh = function( vector){
-	
-		with( sistere.thumbnail){
-				line.now = Math.floor( cursor.now / 3);
-				if( line.now >= line.top+2) page.sliding( vector);
-				if( line.now < line.top)  page.sliding( vector);
-		}
-};
-
-sistere.thumbnail.cursor.unselect = function( index){
-		document.getElementById( "thumbnail_" + index).className = "thumbnail_unSelect";
-};
-
-sistere.thumbnail.cursor.select = function( index){
-		document.getElementById( "thumbnail_" + index).className = "thumbnail_select";
-};
-
-sistere.thumbnail.page.open = function(){
-
-		with( sistere.thumbnail.page)
-		for( var i = 0; i < items.length; i++)
-				move.set( i, items[i]);
-		
-};
-
-sistere.thumbnail.page.sliding = function( vector){
-		
-		with( sistere){
-				
-				if(vector == keymap.up
-					 || vector == keymap.prev)
-						thumbnail.line.top--;
-				
-				thumbnail.page.open();
-				
-				if(vector == keymap.down
-					 || vector == keymap.next)
-						thumbnail.line.top++;
-		}
-};
-
-sistere.thumbnail.page.move.set = function( index, element){
-
-		with( sistere.thumbnail){
-				
-				element.style.width = sistere.util.px( page.width);
-				element.style.height = sistere.util.px( page.height);
-				element.style.left = sistere.util.px( page.margin.horizon * ((index%3)+1) + page.width * (index%3));
-				
-				if( index < line.top * 3){
-						return page.move.over.up( element).hidden();
-				}else if( index >= (line.top + 3) * 3){	
-						return page.move.over.down( element).hidden();
-				}else{
-						element.style.top = sistere.util.px( page.margin.vertical * (Math.floor( index / 3) - line.top+1) + page.height *  (Math.floor(index / 3) - line.top));
-						element.visible();
-						return element;
-				}
-		}
-		
-};
-
-sistere.thumbnail.page.move.over.up = function( element){
-		
-		with( sistere)
-				element.style.top = util.px( thumbnail.page.move.over.pos.up);
-		return element;
-};
-
-sistere.thumbnail.page.move.over.down = function( element){
-		
-		with( sistere)
-				element.style.top = util.px( thumbnail.page.move.over.pos.down);
-		return element;
-};
-
-sistere.thumbnail.page.close = function(){
-		
-		with( sistere){
-				for( var i = 0; i < thumbnail.page.items.length; i++)
-						util.view.close( thumbnail.page.items[i]).style.visibility = "hidden";
-		}
-};
-
-sistere.resouce.init = function(){
-		
-		var display = document.body;
-		with(sistere){
-				
-				for( var i = 0; i < page.items.length; i++){
-						if( page.items[i].getElementsByTagName("div").length > 0){
-								var object = page.items[i].getElementsByTagName("div")[0];
-								var item = util.view.close( document.createElement( "div"));
-								item.className = "resouce";
-								item.setAttribute( "id", "resouce_" + i); 
-								item.innerHTML = object.innerHTML;
-								item.sistere = { width : object.style.width, 
-																 height : object.style.height,
-																 page : i};
-								display.appendChild( item);
-								resouce.items.push( item);
-								page.items[i].removeChild( object);
-						}
-				}
-		}	
-};
-
-sistere.resouce.open = function( pIndex){
-		
-		with( sistere){
-				var item = resouce.search( pIndex);
-				if( item != null){
-						item.style.width = item.sistere.width;
-						item.style.height = item.sistere.height;
-						item.style.bottom = util.px( resouce.padding);
-						item.style.right = util.px( resouce.padding);
-						item.visible();
-
-						mode.current = mode.resouce;
-				}
-		}
-};
-
-sistere.resouce.close = function( pIndex){
-
-		with( sistere){
-				var item = resouce.search( pIndex);
-				if( item != null){
-						util.view.close( item).hidden();
-						
-						mode.current = mode.slide;
-				}
-		}
-};
-
-sistere.resouce.search = function( pIndex){
-	
-		with( sistere.resouce)
-				for( var i = 0; i < items.length; i++)
-						if( items[i].sistere.page == pIndex)
-								return items[i];
-		
-		return null;
-};
-
-sistere.util.view.close = function( element){
-		with( sistere.util){
-				element.style.width = px( view.hidden.width);
-				element.style.height = px( view.hidden.height);
-				element.style.bottom = px( view.hidden.bottom);
-				element.style.right = px( view.hidden.right);
-		}
-
-		return element;
 };
 
 sistere.keymap.init = function(){
     document.addEventListener('keydown',
 			function(e) {
-					with( sistere){
-							if ( util.vInAry( e.keyCode, keymap.ok)) {
-									if( mode.current == mode.thumbnail)
-											thumbnail.select();
-							}
-
-							if ( util.vInAry( e.keyCode, keymap.next)) {
-									if( mode.current == mode.thumbnail)
-											thumbnail.cursor.next();
-									else if( mode.current == mode.slide || mode.current == mode.resouce)
-											page.next();
-							}
-							
-							if ( util.vInAry( e.keyCode, keymap.prev)) {
-									if( mode.current == mode.thumbnail)
-											thumbnail.cursor.prev();
-									else if( mode.current == mode.slide || mode.current == mode.resouce)
-											page.prev();
-							}
-
-							if( util.vInAry( e.keyCode, keymap.up)){
-									if( mode.current == mode.thumbnail)
-											thumbnail.cursor.up();
-									else if( mode.current == mode.slide)
-											thumbnail.open();
-							}
-							
-							if( util.vInAry( e.keyCode, keymap.down)){
-									if( mode.current == mode.slide)
-											resouce.open( page.now);	
-									else if( mode.current == mode.resouce)
-											resouce.close( page.now);
-									else if( mode.current == mode.thumbnail)
-											thumbnail.cursor.down();
-							}
-
-							if( util.vInAry( e.keyCode, keymap.plus)){
-									util.quick.now += 0.1;
-									util.quick.resize();
-							}
-							if( util.vInAry( e.keyCode, keymap.minus)){
-									util.quick.now -= 0.1;
-									util.quick.resize();
-							}
-
-							
+					var mode = sistere.mode.current;
+          if ( sistere.keymap.ok.contains( e.keyCode)) {
+	            if( mode == sistere.mode.thumbnail){
+                  sistere.thumbnail.close();
+              }
 					}
-        }, false);
-
+          else if ( sistere.keymap.next.contains( e.keyCode)) {
+              sistere.page.next();
+					}
+          else if ( sistere.keymap.prev.contains( e.keyCode)) {
+              sistere.page.prev();
+					}
+          else if ( sistere.keymap.up.contains( e.keyCode)) {
+              if( mode == sistere.mode.slide){
+                  sistere.thumbnail.open();
+              }else{
+                  sistere.page.up();
+              }
+					}
+          else if ( sistere.keymap.down.contains( e.keyCode)) {
+              if( mode == sistere.mode.thumbnail){
+                  sistere.page.down();
+              }
+					}
+          else if ( sistere.keymap.plus.contains( e.keyCode)) {
+ 				      sistere.util.resize( 0.2);
+          }
+          else if ( sistere.keymap.minus.contains( e.keyCode)) {
+ 				      sistere.util.resize( -0.2);
+					}
+        }, false);	
 };
 
-sistere.util.quick.resize = function(){
+sistere.util.resize = function( v){
 		
+		sistere.util.zoom += v;
+		var size = sistere.util.size * sistere.util.zoom;
+    document.getElementsByTagName("article")[0].styler( { fontSize: size+"px"});
+		sistere.thumbnail.layer.styler( { fontSize: size*0.25+"px"});
+};
+
+
+sistere.page.create = function( elem){
+
+    //次のエフェクト
+    elem.updateEffect = function(){
+        if( this.nextEffect()){
+            this.effects[this.effectIndex++].updateEffect();
+        }
+    };
+
+    elem.updateAllEffect = function(){
+        while( this.nextEffect()){
+            this.updateEffect();
+        }
+    };
+
+    //このページに属するEffectをすべて戻す
+    elem.downEffect = function(){
+        var i = 0;
+        for( ; i < this.effects.length; i++){
+            this.effects[i].downEffect();
+        }
+        this.effectIndex = 0;
+    };
+
+    
+    //次のEffect処理があるか教えてくれる
+    elem.nextEffect = function(){
+        if( this.effects.length == 0 || this.effectIndex == this.effects.length){
+            return false;
+        }
+        return true;
+    };
+
+    elem.effects = sistere.page.createEffects( elem);
+    elem.effectIndex = 0;
+
+    return elem;
+};
+
+sistere.page.createEffects = function( elem){
+    var child = elem.childNodes.toArray(),
+        i = 0, l = [];
+    for( ; i < child.length; i++){
+        if( child[i].getAttribute != undefined){
+            if( child[i].getAttribute( "effect") != null){
+                //Effectさせる
+                child[i].updateEffect = function(){
+                    this.setAttribute( "effected", "effected");
+                };
+                
+                //Effectを戻す
+                child[i].downEffect = function(){
+                    this.removeAttribute( "effected");
+                };
+                l.push( child[i]);
+
+            }
+        }
+        
+        l = l.concat( sistere.page.createEffects( child[i]));
+    }
+    return l;
+};
+
+//いろいろ初期化
+sistere.init = function(){
 		
-		document.body.style.fontSize = sistere.util.px( sistere.util.quick.page * sistere.util.quick.now);
-		document.getElementById( "thumbnailView").style.fontSize = sistere.util.px( sistere.util.quick.thumbnail * sistere.util.quick.now);
-					
-};
-
-Element.prototype.hidden = function(){
-
-		this.style.visibility = "hidden";
-		this.style.opacity = "0";
-};
-
-Element.prototype.visible = function(){
+		sistere.page.init();
+		sistere.thumbnail.init();
+		sistere.keymap.init();
+    
+    sistere.page.move( 0);
+    sistere.util.resize( 0);
 		
-		this.style.visibility = "visible";
-		this.style.opacity = "1";		
 };
 
-sistere.init();
+/* Collections toArray */
+HTMLCollection.prototype.toArray = function(){
+		
+		var i = 0,
+		    l = [];
+		for( ; i < this.length; i++){
+				
+				l[i] = this[i];
+		}
+		return l;
+};
+
+NodeList.prototype.toArray = function(){
+		
+		var i = 0,
+		    l = [];
+		for( ; i < this.length; i++){
+				
+				l[i] = this[i];
+		}
+		return l;
+};
+
+
+/* Array.contains */
+Array.prototype.contains = function( v){
+    
+    for( var i = 0, len = this.length;  i < len; i++){
+        if( this[i] === v){
+            return true;
+        }
+    }
+
+    return false;
+};
+/* classList */
+var ClassList = function( element){
+    this.element = element;
+};
+ClassList.toString = function(){
+    return "classList";
+};
+ClassList.prototype.__defineGetter__(
+    "_list",
+    function(){
+        var name = this.element.className;
+        name.replace(/^\s*|\s*$/g, "");
+        if( name == ""){
+            return [];
+        }
+        return name.split( " ");
+    }
+);
+ClassList.prototype.__defineSetter__(
+    "_list",
+    function( v){
+        return this.element.className = v;
+    }
+);
+ClassList.prototype.__defineGetter__(
+    'length',
+    function () { return this._list.length; }
+);
+ClassList.prototype.item = function( i){
+    return this._list.split(" ")[i];
+};
+
+ClassList.prototype.contains = function( v){
+    return this._list.match( v);
+};
+ClassList.prototype.add = function( v){
+    var ary = this._list;
+    ary.push(v);
+    this._list = ary.join( " ");
+};
+ClassList.prototype.remove = function(v){
+    var ary = this._list,
+    i, len = ary.length;
+    for( i = 0; i < len; i++){
+        if( ary[i] === v){
+            ary.splice( i, 1);
+        }
+    }
+    this._list = ary.join( " ");
+};
+
+(function(){
+
+     /* classList */
+     if(!('classList' in document.createElement('div'))){
+         
+         HTMLElement.prototype.__defineGetter__(
+             "classList",
+             function(){
+                 return this.__classList || (this.__classList = new ClassList( this));
+             }
+         );
+     }
+     
+     /* outerHTML */
+     if (!('outerHTML' in document.createElement('div'))) {
+         HTMLElement.prototype.__defineGetter__(
+             'outerHTML',
+             function() { 
+                 return this.ownerDocument.createElement('div').appendChild(this.cloneNode(true)).parentNode.innerHTML; 
+             }
+         );
+     }
+
+     /* Element Styler */
+     HTMLElement.prototype.styler = function( styles){
+         
+         for( var key in styles){
+             this.style[key] = styles[key];
+         }
+     };
+     
+     sistere.init();
+ })();

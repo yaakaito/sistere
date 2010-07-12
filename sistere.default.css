@@ -1,142 +1,65 @@
-*{
-
-		Margin: 0;
+html, body, article{
+		margin: 0;
 		padding: 0;
+    width : 100%;
+    height : 100%;
+    display : block;
 }
 
 body{
 		overflow: hidden;
-		font-size: 50px;
-}
-	
-.background{
-		background: -webkit-gradient(
-            linear,
-            center top,
-            center bottom,
-            from(#000000),
-            to(#444444)
-        );
 }
 
-.page{
+section{
 
-		-webkit-transition: all 0.5s ease-in-out;
-		-webkit-transform-origin: 50% 50%;
+    width: 100%;
+    height: 100%;
 		position: absolute;
-		text-align: center;
-
+		top: 0;
+		left: 0;
+		opacity : 0;
+    display : block;
+    -webkit-transition: all 0.5s ease;
+    
 }
 
-.resouce{
-		background: -webkit-gradient(
-            linear,
-            center top,
-            center bottom,
-            from(#000000),
-            to(#444444)
-    );
-		-webkit-transition: all 0.5s ease-in-out;
-		-webkit-transform-origin: 50% 50%;
-		position: absolute;
+section.now{
+
+    opacity : 1;
+    z-index : 1;
 }
 
-.delay{
-		-webkit-transition: all 1.0s ease;
+div#tlayer{
+    
+    -webkit-transition: all 0.5s ease;
 }
 
-#thumbnailView{
-		-webkit-transition: all 0.5s ease;
-		-webkit-transform-origin: 50% 50%;
-    -webkit-box-shadow: black 2px 2px 10px;
-    -webkit-border-radius: 10px;
-		position: absolute;
-		border: 1px #ffffff solid;
-		z-index: 1;
-	
+div#tlayer section{
+
+    opacity : 1;
+    -webkit-transition: all 0.1s ease;
+    
 }
 
-#thumbnailView div{
-		position: absolute;
-		bottom : 0px;
-		right : 0px;
-		border: 1px #ffffff solid;
-	
+div#tlayer section.now{
+    
+    outline: #000000 solid 1px;
 }
 
-#help{
-		-webkit-transition: all 0.5s ease-in-out;
-		-webkit-transform-origin: 50% 50%;
-    -webkit-box-shadow: black 2px 2px 10px;
-    -webkit-border-radius: 10px;
-		position: absolute;
-		z-index: 1;
-		border: 1px #ffffff solid;
+p {
 
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
 }
 
-#help ul{
-		margin: 10px;
-		color: #ffffff;
-		font-size: 1em;
-		font-family:/*Bank Gothic, Snell Roundhand,Party LET,*/Optima, Verdana,Arial,Osaka,Helvetica,sans-serif;
-		list-style: none;
+[effect=delay] {
+
+    -webkit-transition: all 0.5s ease;
+    opacity : 0;
 }
 
-
-p, h1, h2{
-		
-		text-shadow: 2px 2px 3px #ffffaa;
-		color: #ffffff;
-		font-family:/*Bank Gothic, Snell Roundhand,Party LET,*/Optima, Verdana,Arial,Osaka,Helvetica,sans-serif;
-		font-size: 2em;
-}
-
-p{
-
-		margin-top: 24%;
-}
-p.delay{
-		margin: 10px;
-}
-
-h2{
-
-		font-size: 3em;
-		margin-top: 23%;
-}
-
-h1{
-
-		font-size: 4em;
-		margin-top: 20%;
-}
-
-div.thumbnail_select{
-
-    -webkit-box-shadow: #cccccc 0px 0px 60px;
-		-webkit-transition: all 0.5s ease;
-		-webkit-transform-origin: 50% 50%;
-		position:absolute;
-		border: 1px #ffffff solid;
-		text-align:center;
-}
-
-div.thumbnail_unSelect{
-
-		-webkit-transition: all 0.5s ease;
-		-webkit-transform-origin: 50% 50%;
-		position:absolute;
-		border: 1px #ffffff solid;
-		text-align:center;
-}
-
-#thumbnailView p{
-		font-size: 0.5em;
-}
-#thumbnailView h1{
-		font-size: 2em;
-}
-#thumbnailView h2{
-		font-size: 1em;
+[effect=delay][effected]{
+    
+    opacity : 1;
+    
 }
