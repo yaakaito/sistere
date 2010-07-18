@@ -4,6 +4,29 @@ p {
     -moz-transition: all 0.5s ease;
 }
 
+body{
+
+    background-color: #ffffff;
+}
+
+section{
+ 
+	 	background: -webkit-gradient( 
+	 	    linear, 
+	 	    left top, 
+	 	    right bottom,
+        from( #4444ff),
+        color-stop(20%, #8888ff),
+        to( #eeeeff)
+	 	);
+}
+
+section h1, section h2, section p, section li, section address{
+
+    color: #ffffff;
+    text-shadow: 0 0  0.2em #eeeeee;
+}
+
 section h1, section h2, section p{
     margin: 0.5em 0 0 0;
     position:absolute;
@@ -56,7 +79,6 @@ section.description h2{
     margin-top: 0;
     padding-top: 0.5em;
     top: 0;
-    background-color: #555555;
     color: #ffffff;
 }
 
@@ -85,10 +107,18 @@ section pre{
     padding: 1%;
     position: static;
     width: 90%;
-    border: 2px solid #000000;
-    background-color: #dddddd;
+    border: 2px solid #ffffff;
+    background-color: #ccccff;
+    color: #555555;
     font-size: 1.3em
 }
+
+div#tlayer section.now{
+    
+    -webkit-box-shadow: #3333ff 0px 0px 30px; 
+    outline: 0;
+}
+
 [effect=delay] {
 
     -webkit-transition: all 0.5s ease;

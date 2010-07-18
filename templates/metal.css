@@ -1,0 +1,136 @@
+p {
+
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+}
+
+body{
+
+    background-color: #cccccc;
+}
+
+section{
+ 
+	 	background: -webkit-gradient( 
+	 	    linear, 
+	 	    center top, 
+	 	    center bottom,
+        from( #eeeeee),
+        color-stop(20%, #bbbbbb),
+        to( #555555)
+	 	);
+}
+
+section h1, section h2, section p, section li, section address{
+
+    color: #ffffff;
+}
+
+section h1, section h2{
+
+    text-shadow: 0.1em 0.1em 0.2em #333333;
+}
+
+section h1, section h2, section p{
+    margin: 0.5em 0 0 0;
+    position:absolute;
+    top:25%;
+    left:0;
+    width:100%;
+    text-align: center;
+    font-size: 4em;
+}
+
+section.last h1{
+
+    top: 35%;
+    font-size: 2em;
+}
+
+section h2{
+    font-size: 3em;
+}
+
+section address{
+    margin: 0.5em 0 0 0;
+    position:absolute;
+    top:50%;
+    left:0;
+    width:100%;
+    text-align: center;
+    font-size: 1.75em;
+
+}
+
+section p{
+    top: 35%;
+    font-size: 1.7em;
+}
+
+section.list h2{
+    position: static;
+    text-align: left;
+    margin-left: 0.5em;
+    font-size: 2em;
+}
+
+section.list ul{
+
+    margin-left: 3em;
+}
+
+section.description h2{
+    margin-top: 0;
+    padding-top: 0.5em;
+    top: 0;
+    color: #ffffff;
+}
+
+section.description div{
+    position:absolute;
+    margin-left: 5%;
+    margin-right: 5%;
+    top: 25%;
+    left: 0;
+    width: 90%;
+    text-align: left;
+}
+section.description div p{
+    position: static;
+    margin-top: 0.1em;
+    text-align: left;
+}
+
+section li{
+    font-size: 1.5em;
+}
+
+section pre{
+    
+    margin: 3% 5% 3% 3.5%;
+    padding: 1%;
+    position: static;
+    width: 90%;
+    border: 2px solid #222222;
+    background-color: #dddddd;
+    color: #222222;
+    font-size: 1.3em
+}
+
+div#tlayer section.now{
+    
+    -webkit-box-shadow: #cccc00 0px 0px 20px; 
+    outline: 0;
+}
+
+[effect=delay] {
+
+    -webkit-transition: all 0.5s ease;
+    opacity : 0;
+}
+
+[effect=delay][effected]{
+    
+    opacity : 1;
+    
+}
