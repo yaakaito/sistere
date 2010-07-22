@@ -2,178 +2,224 @@
 <html lang="ja">
   <head>
     <meta charset="utf-8" />
-    <title>Sistere ~HTML Prezentaion~</title>
+    <title>Sistere ~HTML base Presentaion~</title>
     <link href="./index.css" rel="stylesheet" type="text/css" media="screen">
   </head>
   <body>
-    <article>
-      <h1>Sistere ~HTML Prezentaion~</h1>
-      <section>
-        <h2>About</h2>
-        <p>
-          Sistereはより簡単に、シンプルに、綺麗にをコンセプトにしたプレゼンテーションツールです。<br />
-          簡単なHTMLを記述し、CSSでスタイルを付けることで柔軟で、すこしリッチなプレゼンテーションをすぐに体感できます。<br />
-          Webページとしてそのまま利用できるので、後日公開資料の公開や、埋め込み等も簡単に行う事ができます。<br />
-        </p>
-        <p>
-          今すぐにプレゼンテーションを作成したい場合は、「Templates」をご利用ください。<br />
-          Sistere本体とそれぞれテーマに合わせたスタイルがセットになっています。<br />
-        </p>
-        <p>
-          自分自身でプレゼンテーションテーマを作りたい場合は「Templates」からベースとなるものを選んで拡張するか、<br />
-          「Downloads」からよりシンプルな本体のみを入手することができます。 <br />
-        </p>
-        <section>
-          <h3>DEMOS</h3>
-          [<a href="exsample.html">Simple DEMO</a>]<br />
-        </section>
+      <header>
+        <hgroup>
+          <h1>Sistere</h1>
+          <h2>~HTML base Presentaion~</h2>
+        </hgroup>
+      </header>
+      <navi>
+        <div>
+        <ul>
+          <li><a href="#about"><span>A</span>bout</a></li>
+          <li><a href="#howtouse"><span>H</span>ow to Use</a></li>
+          <li><a href="#templates"><span>T</span>emplates</a></li>
+          <li><a href="#download"><span>D</span>ownload</a></li>
+        </ul>
+        </div>
+      </navi>
 
+      <div class="float">
+      <article>
         <section>
-          <h3>Platform</h3>
-          <ul>
-            <li>Safari</li>
-            <li>Chrome</li>
-            <li>Firefox</li>
-          </ul>
-          いずれも最新版を推奨.
-        </section>
-        <section>
-          <h3>License</h3>
-          <p>MIT License</p>
-        </section>
-      </section>
-      
-      <section>
-        <h2>How to use</h2>
-        <section>
-          <h3>HTML</h3>
+          <h2 id="about">About</h2>
           <p>
-            簡単なHTMLを記述するだけで、プレゼンテーションを作る事ができます。<br />
-            Sistereでは&lt;section>で囲まれた部分が1ページになります。<br />
+            Sistereはより簡単に、シンプルに、綺麗にをコンセプトにしたプレゼンテーションツールです。<br />
+            簡単なHTMLを記述し、CSSでスタイルを付けることで柔軟で、すこしリッチなプレゼンテーションをすぐに体感できます。<br />
+            Webページとしてそのまま利用できるので、後日公開資料の公開や、埋め込み等も簡単に行う事ができます。<br />
           </p>
-          <pre>
+          <p>
+            今すぐにプレゼンテーションを作成したい場合は、「Templates」をご利用ください。<br />
+            Sistere本体とそれぞれテーマに合わせたスタイルがセットになっています。<br />
+          </p>
+          <p>
+            自分自身でプレゼンテーションテーマを作りたい場合は「Templates」からベースとなるものを選んで拡張するか、<br />
+            「Download」からよりシンプルな本体のみを入手することができます。 <br />
+          </p>
+          <section>
+            <h3>Demos</h3>
+            <a href="./example.html" onclick="demoarea.visible( './example.html'); return false;">Simple DEMO</a><br />
+          </section>
+
+          <section>
+            <h3>Platform</h3>
+            <ul>
+              <li>Safari</li>
+              <li>Chrome</li>
+              <li>Firefox</li>
+            </ul>
+            <p>
+              いずれも最新版を推奨。
+            </p>
+          </section>
+        </section>
+        
+        <section class="page">
+          <h2 id="howtouse">How to use</h2>
+          <section>
+            <h3>HTML</h3>
+            <p>
+              簡単なHTMLを記述するだけで、プレゼンテーションを作る事ができます。<br />
+              Sistereでは&lt;section>で囲まれた部分が1ページになります。<br />
+            </p>
+            <pre>
 &lt;!DOCTYPE html>
 &lt;html lang="ja">
-&lt;head>
-  &lt;meta charset="utf-8" />
-  &lt;title>Sistere&lt;/title>
-  &lt;link href="./sistere.default.css" rel="stylesheet" type="text/css" media="screen">
-&lt;/head>
-&lt;body>
-  &lt;section>
-    &lt;h1>Exsample&lt;/h1>
-  &lt;/section>
-  &lt;section>
-    &lt;p>Text&lt;/p>
-  &lt;/section>
-&lt;/body>
-&lt;script src="./sistere.js" type="text/javascript">&lt;/script>
-&lt;/html>
-          </pre>
-        </section>
-        <section>
-          <h3>STYLE</h3>
-          <p>
-            各要素に「effect」を定義することで、様々な視覚効果を演出することができます。
-          </p>
-        <pre>
+  &lt;head>
+    &lt;meta charset="utf-8" />
+    &lt;title>Sistere&lt;/title>
+    &lt;link href="./sistere.default.css" rel="stylesheet" type="text/css">
+  &lt;/head>
+  &lt;body>
+    &lt;article>
+      &lt;section>
+        &lt;h1>Exsample&lt;/h1>
+      &lt;/section>
+      &lt;section>
+        &lt;p>Text&lt;/p>
+      &lt;/section>
+    &lt;/article>
+  &lt;/body>
+  &lt;script src="./sistere.js" type="text/javascript">&lt;/script>
+&lt;/html></pre>
+          </section>
+          <section>
+            <h3>STYLE</h3>
+            <p>
+              各要素に「effect」を定義することで、様々な視覚効果を演出することができます。
+            </p>
+            <pre>
 &lt;section>
-  &lt;p class="delay">delay1&lt;/p>
-  &lt;p class="delay">delay2&lt;/p>
-  &lt;p class="delay">delay3&lt;/p>
-&lt;/section>
-        </pre>
+  &lt;p effect="delay">delay1&lt;/p>
+  &lt;p effect="delay">delay2&lt;/p>
+  &lt;p effect="delay">delay3&lt;/p>
+&lt;/section></pre>
+          </section>
+          <section>
+            <h3>Thumbnail MODE</h3>
+            <p>
+              スライドのサムネイルを一覧表示することができます。<br />
+            </p>
+            <ul>
+              <li>サムネイルを表示する : "上"キー</li>
+              <li>サムネイルを選択する : "上下左右"キー</li>
+              <li>サムネイルを選択して閉じる : "Enter"キー</li>
+            </ul>   
+          </section>
+          <section>
+            <h3>Auto Text ReSize</h3>
+            <p>
+              Sistereは画面のサイズに合わせてテキストのサイズを自動調整します。<br />
+            </p>        
+          </section>
+          <section>
+            <h3>Quick Text ReSize</h3>
+            <p>
+              実際にプロジェクターに表示した時に、小さい/大きい文字表示を簡単に切り替えることができます。<br />
+              またこの機能は、全体のサイズを変更するのではなく、文字の大きさのみを調整します。<br />
+            </p>
+            <ul>
+              <li>文字のサイズを大きくする : "+"キー</li>
+              <li>文字のサイズを小さくする : "-"キー</li>
+            </ul>
+          </section>
         </section>
-        <section>
-          <h3>Thumbnail MODE</h3>
-          <p>
-            スライドのサムネイルを一覧表示することができます。<br />
-          </p>
-          <ul>
-            <li>サムネイルを表示する : "上"キー</li>
-            <li>サムネイルを選択する : "上下左右"キー</li>
-            <li>サムネイルを選択して閉じる : "Enter"キー</li>
-          </ul>   
+        <section class="page">
+          <h2 id="templates">Templates</h2>
+          <section>
+            <h3>Monochro</h3>
+            <p>
+              モノクロカラーで作られた、シンプルなテンプレート。
+            </p>
+            <a href="./templates/monochro.html" onclick="demoarea.visible( './templates/monochro.html'); return false;">Demo</a>
+            <a href="./zip/monochro.zip">Download(Zip Archive)</a>
+          </section>
+          <section>
+            <h3>Cool</h3>
+            <p>
+              黒を基調とした、少しクールチックなテンプレート。
+            </p>
+            <a href="./templates/cool.html" onclick="demoarea.visible( './templates/cool.html'); return false;">Demo</a>
+            <a href="./zip/cool.zip">Download(Zip Archive)</a>
+          </section>
+          <section>
+            <h3>Metal</h3>
+            <p>
+              金属の様な光沢感をイメージした、ちょっと渋いテンプレート。
+            </p>
+            <a href="./templates/metal.html" onclick="demoarea.visible( './templates/metal.html'); return false;">Demo</a>
+            <a href="./zip/metal.zip">Download(Zip Archive)</a>
+          </section>
+          <section>
+            <h3>Sky</h3>
+            <p>
+              青空の様に澄み渡った、さわやかなテンプレート。
+            </p>
+            <a href="./templates/sky.html" onclick="demoarea.visible( './templates/sky.html'); return false;">Demo</a>
+            <a href="./zip/sky.zip">Download(Zip Archive)</a>
+          </section>
+          <section>
+            <h3>Olive</h3>
+            <p>
+              黄緑と茶色を使った、森チックなテンプレート。
+            </p>
+            <a href="./templates/olive.html" onclick="demoarea.visible( './templates/olive.html'); return false;">Demo</a>
+            <a href="./zip/olive.zip">Download(Zip Archive)</a>
+          </section>
         </section>
-        <section>
-          <h3>Auto Text ReSize</h3>
-          <p>
-            Sistereは画面のサイズに合わせてテキストのサイズを自動調整します。<br />
-          </p>        
+        <section class="page">
+          <h2 id="download">Download</h2>
+          <section>
+            <h3>Zip Archive</h3>
+            <p>
+              Sistere本体とデフォルトで用意されているCSS、サンプルのHTMLが入ったパッケージです。<br />
+              このパッケージ内に「Templates」で用意されているようなCSSは含まれません。<br />
+            </p>
+            <a href="./zip/sistere_v1.00.zip">sistere_v1.00.zip</a>
+          </section>
+          <section>
+            <h3>GitHub</h3>
+            <p>
+              SistereのコードはGitHubでリリース版が管理、公開されています。
+            </p>
+            <a href="http://github.com/yaakaito/sistere">http://github.com/yaakaito/sistere</a>
+          </section>
+          <section>
+            <h3>License</h3>
+            <p>MIT License</p>
+          </section>
         </section>
-        <section>
-          <h3>Quick Text ReSize</h3>
-          <p>
-            実際にプロジェクターに表示した時に、小さい/大きい文字表示を簡単に切り替えることができます。<br />
-            またこの機能は、全体のサイズを変更するのではなく、文字の大きさのみを調整します.<br />
-          </p>
-          <ul>
-            <li>文字のサイズを大きくする : "+"キー</li>
-            <li>文字のサイズを小さくする : "-"キー</li>
-          </ul>
-        </section>
-      </section>
-      <section>
-        <h2>Templates</h2>
-        <section>
-          <h3>Snow</h3>
-          
-        </section>
-        <section>
-          <h3>Heavy</h3>
-          
-        </section>
-        <section>
-          <h3>Metal</h3>
-          
-        </section>
-        <section>
-          <h3>Sky</h3>
-          
-        </section>
-        <section>
-          <h3>Ocean</h3>
-          
-        </section>
-        <section>
-          <h3>Olive</h3>
-          
-        </section>
-        <section>
-          <h3>3D</h3>
-          
-        </section>
-        <section>
-          <h3>Hacker</h3>
-          
-        </section>
-      </section>
-      <section>
-        <h2>Downloads</h2>
-        <section>
-          <h3>Zip Archive</h3>
-          <p>
-            Sistere本体とデフォルトで用意されているCSS、サンプルのHTMLが入ったパッケージです。<br />
-            このパッケージ内に「Templates」で用意されているようなCSSは含まれません。<br />
-          </p>
-          <a href="./zip/sistere_v0.01.zip">sistere_v0.01.zip</a>
-        </section>
-        <section>
-          <h3>GitHub</h3>
-          <p>
-            SistereのコードはGitHubでリリース版が管理、公開されています。
-          </p>
-          <a href="http://github.com/yaakaito/sistere">http://github.com/yaakaito/sistere</a>
-        </section>
-      <section>
-        <h2>License</h2>
-        <p>MIT License</p>
-      </section>
+      </article>
       <footer>
         <p class="copyright">
           <a href="http://www.yaakaito.org/">yaakaito.org</a>
         </p>
       </footer>
-    </article>
+      </div>
+      <div class="demo" id="demo" onclick="demoarea.hidden();">
+        <iframe id="demoarea" src="./templates/cool.html">
+        </iframe>
+      </div>
   </body>
+
+  <script>
+    var iframe = document.getElementById( "demoarea");
+    var demoarea = document.getElementById( "demo");
+    demoarea.hidden = function(){
+        this.style.opacity = "0";
+        this.style.zIndex = "-1";
+        this.style.display = "hidden";
+    };
+
+    demoarea.visible = function( path){
+        iframe.src = path;
+        this.style.opacity = "1";
+        this.style.zIndex = "2";
+        this.style.display = "block";
+    }
+  </script>
 </html>

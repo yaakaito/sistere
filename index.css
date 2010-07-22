@@ -1,4 +1,141 @@
-html, body, article{
-		margin:0;
-		padding:0;
+html, body{
+
+    margin: 0;
+    padding: 0;
+}
+html, body, article, div, footer{
+
+    font-size: 10.5pt;
+    background-color: #ffffff;
+}
+
+header, header hgroup h1, header hgroup h2{
+
+    width: 680px;
+    text-align: center;
+}
+
+header h1{
+    
+    color: #444444;
+    margin: 1px 0;
+    font-size: 24pt;
+    font-weight: bold;
+    text-shadow: 0px 1px 0.1em #555555;
+}
+
+header h2{
+
+    color: #444444;
+    margin-top: -5px;
+    margin-bottom: 10px;
+    font-size: 16pt;
+    font-weight: normal;
+    text-shadow: 0px 1px 0.1em #555555;
+}
+
+navi div{
+
+    padding: 0;
+}
+
+navi div a{
+
+    color: #666666;
+}
+
+navi div ul{
+    
+    padding: 0;
+    width: 700px;
+    margin: 3px;
+    list-style: none:
+}
+navi div ul li{
+    
+    margin: 0 25px;
+    font-weight: bold;
+    display: inline;
+}
+navi div ul li a span{
+
+    font-size: 18pt;
+}
+
+div.float{
+
+    width: 680px;
+    border-top: 1px solid #000000;
+    border-right: 1px solid #000000;
+    margin-bottom: 0;
+    padding: 10px;
+    padding-left: 30px;
+    -webkit-box-shadow: #555555 10px 10px 15px; 
+
+}
+
+section h2{
+
+    border-bottom: 1px solid #666666;
+    
+}
+
+section h3{
+
+    border-left: 5px solid #666666;
+    padding-left: 10px;
+}
+
+section pre, section p, section a{
+
+    margin-left: 10px;
+}
+
+section pre{
+
+    border: 1px solid #888888;
+    background-color: #fdfdfd;
+    padding: 5px;
+    font-size: 9.5pt;
+}
+footer p{
+    
+    margin-left: -30px;
+    margin-bottom: -10px;
+    background-color: #000000;
+    color: #ffffff;
+    padding: 1.2px 10px;
+    width: 700px;
+    border-right: 1px solid #000000;
+    height: 20px;
+    font-size: 10pt;
+    text-align: center;
+    vertical-align: middle;
+}
+
+footer p a{
+
+    color: #ffffff;
+}
+
+div.demo{
+
+    -webkit-transition: all 0.3s ease;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba( 12, 12, 12, 0.8);
+    display: hidden;
+    opacity: 0;
+    z-index: -1;
+}
+
+div.demo iframe{
+    background-color: #ffffff;
+    border: 0;
+    margin: 5% 10%;
+    width: 80%;
+    height: 80%;
 }
